@@ -1,0 +1,20 @@
+h2 {text-shadow:1px 1px 1px grey; text-align : center;}
+table {width: 100%;}
+th {background: Cornflowerblue; color: white;}
+tr:nth-child(even){
+    background-color:Lightsteelblue;
+}
+  
+tr:nth-child(odd){
+    background-color: Whitesmoke;
+}
+
+div {margin: 100px;}
+input[type=text] {border: none; background: transparent; width: 100%;}
+input[type=number] {border: none; background: transparent; width: 100%;}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;}
+  
+select{ background: transparent; text-align: center; width: 100%;}

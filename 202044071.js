@@ -136,11 +136,6 @@ function totalGrade(g_arr, g_sum, sj_grade){
   return total.toFixed(2); // 소수점 둘째 자리까지 표시 후 리턴
 }
 
-// 테이블 정렬 함수
-function sortTable(table){
-  
-}
-
 //학년별 항목들의 name에 붙는 숫자를 구하기 위한 함수
 function number(id){
   if(id == "one")      // id가 one이면 1을 저장
@@ -236,9 +231,7 @@ function deleteTable(table){
 function saveTable(table){
 
   // 학년별 표 cell의 name을 구별하기 위한 비교 및 저장
-  var num = number(table);
-
-  sortTable(table);
+  var num = number(table.id);
 
   var g_sum = 0;  // 학점의 합계를 저장할 변수
   var at_sum = 0; // 출석점수의 합계를 저장할 변수
@@ -283,37 +276,6 @@ function saveTable(table){
     if(as_arr[i].value != "") // 점수가 빈칸이 아니라면
       f_sum += parseInt(f_arr[i].value); // 점수 합산
   }
-
-  var tableRow = table.rows.length; // 테이블 전체 행의 수
-
-  if(tableRow - f_arr.length != 1){ // 테이블의 총 행의 수와 입력한 행의 갯수가 1이 아니라면(1은 th 행)
-    table.deleteRow(-1); // 합계 줄(마지막줄) 삭제
-  }
-
-  // 새 행(Row) 추가
-  var newRow = table.insertRow();
-
-  // 새 행(Row)에 Cell 추가
-  var newCell1 = newRow.insertCell(0);
-  var newCell2 = newRow.insertCell(1);
-  var newCell3 = newRow.insertCell(2);
-  var newCell4 = newRow.insertCell(3);
-  var newCell5 = newRow.insertCell(4);
-  var newCell6 = newRow.insertCell(5);
-  var newCell7 = newRow.insertCell(6);
-  var newCell8 = newRow.insertCell(7);
-  var newCell9 = newRow.insertCell(8);
-
-  //합계 셀 병합
-  newCell1.colSpan = "3";
-
-  newCell1.innerHTML = "<td><center>합계</center></td>";
-  newCell2.innerHTML = "<center>"+g_sum+"</center>";                        // 학점 합계 출력
-  newCell3.innerHTML = "<center>"+at_sum+"</center>";                       // 출석점수 합계 출력
-  newCell4.innerHTML = "<center>"+as_sum+"</center>";                       // 과제점수 합계 출력
-  newCell5.innerHTML = "<center>"+m_sum+"</center>";                        // 중간고사 합계 출력
-  newCell6.innerHTML = "<center>"+f_sum+"</center>";                        // 기말고사 합계 출력
-  newCell7.innerHTML = "<center>"+ (at_sum+as_sum+m_sum+f_sum)+"</center>"; // 총점 출력
   
   // 과목별 총점 구하기
   var sj_sum = new Array();
@@ -351,13 +313,43 @@ function saveTable(table){
     table.getElementsByTagName("tr")[i+1].getElementsByTagName("td")[10].innerHTML = "<center>"+ sj_grade[i] + "</center>";
   }
 
-  if(sj_sum.length == nCount){
-    alert("해당 학년은 점수가 없어 총 평균과 총 성적을 구할 수 없습니다.");
+  if(sj_sum.length == nCount){ // 과목별 총점의 갯수와 빈칸의 갯수(교양과목 갯수)가 같으면
+     alert("해당 학년은 점수가 없어 총 평균과 총 성적을 구할 수 없습니다.");
     return;
   }
 
   sj_avg /= (sj_sum.length-nCount); // 모든 과목의 총 평균 구하기
 
-  newCell8.innerHTML = "<center>"+ sj_avg +"</center>"; // 총 평균 출력
+  var tableRow = table.rows.length; // 테이블 전체 행의 수
+
+  if(tableRow - f_arr.length != 1){ // 테이블의 총 행의 수와 입력한 행의 갯수가 1이 아니라면(1은 th 행)
+    table.deleteRow(-1); // 합계 줄(마지막줄) 삭제
+  }
+
+  // 새 행(Row) 추가
+  var newRow = table.insertRow();
+
+  // 새 행(Row)에 Cell 추가
+  var newCell1 = newRow.insertCell(0);
+  var newCell2 = newRow.insertCell(1);
+  var newCell3 = newRow.insertCell(2);
+  var newCell4 = newRow.insertCell(3);
+  var newCell5 = newRow.insertCell(4);
+  var newCell6 = newRow.insertCell(5);
+  var newCell7 = newRow.insertCell(6);
+  var newCell8 = newRow.insertCell(7);
+  var newCell9 = newRow.insertCell(8);
+
+  //합계 셀 병합
+  newCell1.colSpan = "3";
+
+  newCell1.innerHTML = "<td><center>합계</center></td>";
+  newCell2.innerHTML = "<center>"+g_sum+"</center>";                        // 학점 합계 출력
+  newCell3.innerHTML = "<center>"+at_sum+"</center>";                       // 출석점수 합계 출력
+  newCell4.innerHTML = "<center>"+as_sum+"</center>";                       // 과제점수 합계 출력
+  newCell5.innerHTML = "<center>"+m_sum+"</center>";                        // 중간고사 합계 출력
+  newCell6.innerHTML = "<center>"+f_sum+"</center>";                        // 기말고사 합계 출력
+  newCell7.innerHTML = "<center>"+ (at_sum+as_sum+m_sum+f_sum)+"</center>"; // 총점 출력
+  newCell8.innerHTML = "<center>"+ sj_avg +"</center>";                     // 총 평균 출력
   newCell9.innerHTML = "<center>"+ totalGrade(g_arr, g_sum, sj_grade) +"</center>" // 총 평균 학점 출력
 }
